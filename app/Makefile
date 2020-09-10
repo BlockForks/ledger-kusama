@@ -167,13 +167,13 @@ AFLAGS +=
 LD       := $(GCCPATH)arm-none-eabi-gcc
 LDFLAGS  += -O3 -z muldefs
 LDLIBS   += -lm -lgcc -lc
-#LDLIBS   += -Lrust/target/thumbv6m-none-eabi/release -lrslib
+LDLIBS   += -Lrust/target/thumbv6m-none-eabi/release -lrslib
 
 ##########################
 include $(BOLOS_SDK)/Makefile.glyphs
 
 APP_SOURCE_PATH += $(MY_DIR)/src
-#APP_SOURCE_PATH += $(MY_DIR)/rust/include
+APP_SOURCE_PATH += $(MY_DIR)/rust/include
 APP_SOURCE_PATH += $(MY_DIR)/../deps/ledger-zxlib/include
 APP_SOURCE_PATH += $(MY_DIR)/../deps/ledger-zxlib/src
 APP_SOURCE_PATH += $(MY_DIR)/../deps/ledger-zxlib/app/common
@@ -183,16 +183,14 @@ SDK_SOURCE_PATH  += lib_ux
 
 .PHONY: rust
 rust:
-# DISABLED
-#	cd rust && CARGO_HOME="$(CURDIR)/rust/.cargo" cargo build --target thumbv6m-none-eabi --release
+	cd rust && CARGO_HOME="$(CURDIR)/rust/.cargo" cargo build --target thumbv6m-none-eabi --release
 
 # Before linking, we need to be sure rust lib is there
 bin/app.elf: rust
 
 .PHONY: rust_clean
 rust_clean:
-# DISABLED
-#	cd rust && CARGO_HOME="$(CURDIR)/rust/.cargo" cargo clean
+	cd rust && CARGO_HOME="$(CURDIR)/rust/.cargo" cargo clean
 
 clean: rust_clean
 
